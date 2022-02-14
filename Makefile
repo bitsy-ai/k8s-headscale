@@ -15,9 +15,6 @@ k8s/config.yml:
 k8s/sa.yml: .venv
 	.venv/bin/j2 templates/sa.j2 --filters=filters.py -o k8s/sa.yml
 
-k8s/secret.yml: .venv
-	.venv/bin/j2 templates/secret.j2 --filters=filters.py -o k8s/secret.yml
-
 k8s/deployment.yml: .venv
 	.venv/bin/j2 templates/deployment.j2 --filters=filters.py -o k8s/deployment.yml
 
@@ -27,12 +24,11 @@ k8s/ingress.yml: .venv
 k8s/service.yml: .venv
 	.venv/bin/j2 templates/service.j2 --filters=filters.py -o k8s/service.yml
 
-render: clean k8s/secret.yml k8s/deployment.yml k8s/ingress.yml k8s/service.yml k8s/sa.yml k8s/config.yml
+render: clean k8s/deployment.yml k8s/ingress.yml k8s/service.yml k8s/sa.yml k8s/config.yml
 
 deploy: render
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/config.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/sa.yml
-	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/secret.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/deployment.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/service.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/ingress.yml
