@@ -40,9 +40,11 @@ spec:
             periodSeconds: 15
           volumeMounts:
             - name: secret
-              mountPath: /vol/secret
+              mountPath: /etc/headscale/
+              readOnly: true
             - name: etc
               mountPath: /etc/headscale/config.yaml
+              readOnly: true
         - name: cloud-sql-proxy
           # It is recommended to use the latest version of the Cloud SQL proxy
           # Make sure to update on a regular schedule!
@@ -73,3 +75,6 @@ spec:
         - name: secret
           secret:
             secretName: headscale
+          items:
+            - key: private-key
+              path: my-group/my-username

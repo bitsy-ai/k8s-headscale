@@ -30,7 +30,7 @@ k8s/service.yml: .venv
 render: clean k8s/secret.yml k8s/deployment.yml k8s/ingress.yml k8s/service.yml k8s/sa.yml k8s/config.yml
 
 deploy: render
-	kubectl -n $(HEADSCALE_NAMESPACE) create configmap headscale-etc --from-file k8s/config.yml -o yaml --dry-run=client | kubectl -n $(HEADSCALE_NAMESPACE) apply -f -
+	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/config.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/sa.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/secret.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/deployment.yml
