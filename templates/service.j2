@@ -8,6 +8,11 @@ spec:
   customRequestHeaders:
     headers:
     - "X-Forwarded-Proto:https"
+  healthCheck:
+    checkIntervalSec: 30
+    port: 8080
+    type: HTTP
+    requestPath: /health
 ---
 apiVersion: v1
 kind: Service
