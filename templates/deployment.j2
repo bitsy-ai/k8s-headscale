@@ -33,8 +33,9 @@ spec:
               protocol: TCP
               containerPort: 8080
           livenessProbe:
-            tcpSocket:
-              port: http
+            httpGet:
+              path: /health
+              port: 8080
             initialDelaySeconds: 30
             timeoutSeconds: 5
             periodSeconds: 15
