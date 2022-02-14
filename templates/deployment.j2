@@ -39,9 +39,6 @@ spec:
             timeoutSeconds: 5
             periodSeconds: 15
           volumeMounts:
-            - name: secret
-              mountPath: /var/run/headscale
-              readOnly: true
             - name: etc
               mountPath: /etc/headscale
               readOnly: true
