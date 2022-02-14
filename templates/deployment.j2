@@ -27,7 +27,7 @@ spec:
               valueFrom:
                 secretKeyRef:
                   name: headscale
-                  key: postgres-password
+                  key: postgres.password
           ports:
             - name: http
               protocol: TCP
