@@ -19,7 +19,7 @@ spec:
         - name: headscale
           image: "{{ HEADSCALE_IMAGE }}"
           imagePullPolicy: IfNotPresent
-          command: ["/go/bin/headscale", "serve"]
+          command: ["headscale", "serve"]
           env:
             - name: SERVER_URL
               value: "{{ HEADSCALE_PROTO }}://{{ HEADSCALE_HOSTNAME }}"
