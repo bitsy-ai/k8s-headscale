@@ -10,6 +10,17 @@ spec:
   selector:
     app: headscale
   ports:
-    - name: http
-      targetPort: http
-      port: 8080
+    - protocol: TCP
+      port: 80
+      targetPort: 8080
+  type: NodePort
+---
+apiVersion: networking.gke.io/v1beta1
+kind: FrontendConfig
+metadata:
+  name: http-to-https
+  namespace: "{{ HEADSCALE_NAMESPACE }}"
+spec:
+  redirectToHttps:
+    enabled: true
+    responseCodeName: MOVED_PERMANENTLY_DEFAULT

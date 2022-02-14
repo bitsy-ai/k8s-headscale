@@ -17,14 +17,8 @@ metadata:
     kubernetes.io/ingress.global-static-ip-name: "headscale-static-ip"
     networking.gke.io/managed-certificates: "headscale-tls"
 spec:
-  rules:
-    - host: "{{ HEADSCALE_HOSTNAME }}"
-      http:
-        paths:
-          - backend:
-              service:
-                name: headscale
-                port:
-                  number: 8080
-            path: /
-            pathType: Prefix
+  defaultBackend:
+    service:
+      name: headscale
+      port:
+        number: 80
