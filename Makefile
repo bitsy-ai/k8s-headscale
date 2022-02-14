@@ -1,5 +1,5 @@
-HEADSCALE_NAMESPACE ?= "headscale"
-
+HEADSCALE_NAMESPACE ?= headscale
+ENV_FILE ?= .env/.sandbox
 .venv:
 	python3 -m venv .venv
 	.venv/bin/pip install j2cli[yaml]
@@ -21,3 +21,6 @@ deploy: k8s/configmap.yml k8s/deployment.yml k8s/ingress.yml k8s/service.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) -f k8s/deployment.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) -f k8s/service.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) -f k8s/ingress.yml
+
+env:
+	shdotenv --env $(ENV_FILE)
