@@ -14,6 +14,7 @@ spec:
       labels:
         app: headscale
     spec:
+      serviceAccountName: headscale
       containers:
         - name: headscale
           image: "headscale:latest"
