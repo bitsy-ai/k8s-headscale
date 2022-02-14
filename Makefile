@@ -17,10 +17,10 @@ k8s/service.yml: .venv
 	.venv/bin/j2 templates/service.j2 -o k8s/service.yml
 
 deploy: k8s/configmap.yml k8s/deployment.yml k8s/ingress.yml k8s/service.yml
-	kubectl -n $(HEADSCALE_NAMESPACE) -f k8s/configmap.yml
-	kubectl -n $(HEADSCALE_NAMESPACE) -f k8s/deployment.yml
-	kubectl -n $(HEADSCALE_NAMESPACE) -f k8s/service.yml
-	kubectl -n $(HEADSCALE_NAMESPACE) -f k8s/ingress.yml
+	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/configmap.yml
+	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/deployment.yml
+	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/service.yml
+	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/ingress.yml
 
 env:
 	shdotenv --env $(ENV_FILE)

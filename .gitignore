@@ -1,5 +1,4 @@
 .env
 *.code-workspace
 .venv
-dist/*.yml
-dist/*.yaml
+k8s/*
