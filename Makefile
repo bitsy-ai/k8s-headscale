@@ -24,9 +24,6 @@ k8s/ingress.yml: .venv
 k8s/service.yml: .venv
 	.venv/bin/j2 templates/service.j2 --filters=filters.py -o k8s/service.yml
 
-k8s/private.key:
-	echo $(WIREGUARD_PRIVATE_KEY) > k8s/private.key
-
 k8s/postgress.password:
 	echo $(HEADSCALE_POSTGRES_PASSWORD) > k8s/postgres.password
 
