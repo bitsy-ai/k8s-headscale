@@ -1,0 +1,37 @@
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: headscale-config
+  namespace: "{{ HEADSCALE_NAMESPACE }}"
+data:
+  server_url: "{{ HEADSCALE_PROTO }}://{{ HEADSCALE_HOSTNAME }}"
+  listen_addr: "0.0.0.0:8080"
+  ephemeral_node_inactivity_timeout: "30m"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: headscale-site
+  namespace: "{{ HEADSCALE_NAMESPACE }}"
+data:
+  public-proto: "{{ HEADSCALE_PROTO }}"
+  public-hostname: "{{ HEADSCALE_HOSTNAME }}"
+  contact-email: "{{ HEADSCALE_CONTACT_EMAIL }}"
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: headscale-etc
+  namespace: "{{ HEADSCALE_NAMESPACE }}"
+data:
+  config.json: "{}"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: headscale
+  namespace: "{{ HEADSCALE_NAMESPACE }}"
+data:
+  private-key: "{{ WIREGUARD_PRIVATE_KEY | b64encode }}"
+  postgres-password: "{{ HEADSCALE_POSTGRES_PASSWORD | b64encode }}"

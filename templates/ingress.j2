@@ -1,0 +1,30 @@
+---
+apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: "headscale-tls"
+spec:
+  domains:
+    - "{{ HEADSCALE_HOSTNAME }}"
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: headscale
+  namespace: "{{ HEADSCALE_NAMESPACE }}"
+  annotations:
+    networking.gke.io/v1beta1.FrontendConfig: "http-to-https"
+    kubernetes.io/ingress.global-static-ip-name: "headscale-static-ip"
+    networking.gke.io/managed-certificates: "headscale-tls"
+spec:
+  rules:
+    - host: "{{ HEADSCALE_HOSTNAME }}"
+      http:
+        paths:
+          - backend:
+              service:
+                name: headscale
+                port:
+                  number: 8080
+            path: /
+            pathType: Prefix
