@@ -17,7 +17,7 @@ spec:
       serviceAccountName: headscale
       containers:
         - name: headscale
-          image: "headscale:latest"
+          image: "{{ HEADSCALE_IMAGE }}"
           imagePullPolicy: IfNotPresent
           command: ["/go/bin/headscale", "serve"]
           env:
