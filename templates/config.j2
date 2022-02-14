@@ -27,7 +27,7 @@ data:
     #
     # https://myheadscale.example.com:443
     #
-    server_url: "https://net.print-nanny.com"
+    server_url: "{{ HEADSCALE_PROTO }}://{{ HEADSCALE_HOSTNAME }}"
 
     # Address to listen to / bind to on the server
     #
@@ -87,9 +87,9 @@ data:
 
     # # Postgres config
     db_type: postgres
-    db_host: localhost
+    db_host: "{{ HEADSCALE_POSTGRES_HOST }}"
     db_port: 5432
-    db_name: headscale
+    db_name: "{{ HEADSCALE_POSTGRES_DB }}"
     # db_user: foo
     # db_pass: bar
 
@@ -104,10 +104,10 @@ data:
     acme_url: https://acme-v02.api.letsencrypt.org/directory
 
     # Email to register with ACME provider
-    acme_email: "leigh@print-nanny.com"
+    acme_email: "{{ HEADSCALE_CONTACT_EMAIL }}"
 
     # Domain name to request a TLS certificate for:
-    tls_letsencrypt_hostname: "net.print-nanny.com"
+    tls_letsencrypt_hostname: "{{ HEADSCALE_HOSTNAME }}"
 
     # Path to store certificates and metadata needed by
     # letsencrypt
@@ -167,7 +167,7 @@ data:
       # `base_domain` must be a FQDNs, without the trailing dot.
       # The FQDN of the hosts will be
       # `hostname.namespace.base_domain` (e.g., _myhost.mynamespace.example.com_).
-      base_domain: "net.print-nanny.com"
+      base_domain: "{{ HEADSCALE_HOSTNAME }}"
 
     # Unix socket used for the CLI to connect without authentication
     # Note: for local development, you probably want to change this to:
