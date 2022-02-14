@@ -1,4 +1,18 @@
 ---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: "headscale-backend"
+spec:
+  customRequestHeaders:
+    headers:
+    - "X-Forwarded-Proto:https"
+  healthCheck:
+    checkIntervalSec: 30
+    port: 8080
+    type: HTTP
+    requestPath: /
+---
 apiVersion: v1
 kind: Service
 metadata:
@@ -6,6 +20,8 @@ metadata:
   name: headscale
   labels:
     app: headscale
+  annotations:
+    cloud.google.com/backend-config: '{"default": "headscale-backend"}'
 spec:
   selector:
     app: headscale
