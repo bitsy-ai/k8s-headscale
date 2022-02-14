@@ -81,8 +81,8 @@ data:
     db_host: "{{ HEADSCALE_POSTGRES_HOST }}"
     db_port: 5432
     db_name: "{{ HEADSCALE_POSTGRES_DB }}"
-    # db_user: foo
-    # db_pass: bar
+    db_user: "{{ HEADSCALE_POSTGRES_USER }}"
+    db_pass: "{{ HEADSCALE_POSTGRES_PASSWORD }}"
 
     ### TLS configuration
     #

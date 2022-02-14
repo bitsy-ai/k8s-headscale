@@ -24,17 +24,9 @@ k8s/ingress.yml: .venv
 k8s/service.yml: .venv
 	.venv/bin/j2 templates/service.j2 --filters=filters.py -o k8s/service.yml
 
-k8s/postgress.password:
-	echo $(HEADSCALE_POSTGRES_PASSWORD) > k8s/postgres.password
-
-render: clean k8s/deployment.yml k8s/ingress.yml k8s/service.yml k8s/sa.yml k8s/config.yml k8s/private.key k8s/postgress.password
+render: clean k8s/deployment.yml k8s/ingress.yml k8s/service.yml k8s/sa.yml k8s/config.yml
 
 deploy: render
-	kubectl -n $(HEADSCALE_NAMESPACE) create secret generic headscale \
-		--from-file=private.key=k8s/private.key \
-		--from-file=postgres.password=k8s/postgres.password \
-		-o yaml --dry-run=client \
-		| kubectl -n $(HEADSCALE_NAMESPACE) apply -f -
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/config.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/sa.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/deployment.yml
