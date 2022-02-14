@@ -1,3 +1,5 @@
 .env
 *.code-workspace
 .venv
+dist/*.yml
+dist/*.yaml
