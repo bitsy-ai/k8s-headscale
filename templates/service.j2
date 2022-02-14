@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: "{{ HEADSCALE_NAMESPACE }}"
+  name: headscale
+  labels:
+    app: headscale
+spec:
+  selector:
+    app: headscale
+  ports:
+    - name: http
+      targetPort: http
+      port: 8080
