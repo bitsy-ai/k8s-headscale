@@ -33,5 +33,7 @@ deploy: render
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/service.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/ingress.yml
 
+clean-k8s-ns:
+	kubectl delete all --all -n $(HEADSCALE_NAMESPACE)
 env:
 	shdotenv --env $(ENV_FILE)

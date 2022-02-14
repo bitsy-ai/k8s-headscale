@@ -2,6 +2,7 @@
 apiVersion: networking.gke.io/v1
 kind: ManagedCertificate
 metadata:
+  namespace: "{{ HEADSCALE_NAMESPACE }}"
   name: "headscale-tls"
 spec:
   domains:
