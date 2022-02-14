@@ -35,5 +35,6 @@ deploy: render
 
 clean-k8s-ns:
 	kubectl delete all --all -n $(HEADSCALE_NAMESPACE)
+	kubectl delete ingress/headscale -n $(HEADSCALE_NAMESPACE)
 env:
 	shdotenv --env $(ENV_FILE)
