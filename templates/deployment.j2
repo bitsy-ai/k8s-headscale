@@ -21,35 +21,13 @@ spec:
           imagePullPolicy: IfNotPresent
           command: ["headscale", "serve"]
           env:
-            - name: SERVER_URL
-              value: "{{ HEADSCALE_PROTO }}://{{ HEADSCALE_HOSTNAME }}"
-            - name: LISTEN_ADDR
-              valueFrom:
-                configMapKeyRef:
-                  name: headscale-config
-                  key: listen_addr
-            - name: DERP_MAP_PATH
-              value: /vol/config/derp.yaml
-            - name: EPHEMERAL_NODE_INACTIVITY_TIMEOUT
-              valueFrom:
-                configMapKeyRef:
-                  name: headscale-config
-                  key: ephemeral_node_inactivity_timeout
-            - name: DB_TYPE
-              value: postgres
-            - name: DB_HOST
-              value: "{{ HEADSCALE_POSTGRES_HOST }}"
-            - name: DB_PORT
-              value: "5432"
             - name: DB_USER
               value: "{{ HEADSCALE_POSTGRES_USER }}"
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
                   name: headscale
-                  key: postgres-password
-            - name: DB_NAME
-              value: "{{ HEADSCALE_POSTGRES_DB }}"
+                  key: postgres.password
           ports:
             - name: http
               protocol: TCP
@@ -61,10 +39,6 @@ spec:
             timeoutSeconds: 5
             periodSeconds: 15
           volumeMounts:
-            - name: config
-              mountPath: /vol/config
-            - name: secret
-              mountPath: /vol/secret
             - name: etc
               mountPath: /etc/headscale
         - name: cloud-sql-proxy
@@ -88,9 +62,6 @@ spec:
           ports:
             - containerPort: 5432
       volumes:
-        - name: config
-          configMap:
-            name: headscale-site
         - name: etc
           configMap:
             name: headscale-etc

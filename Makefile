@@ -9,11 +9,11 @@ clean:
 	mkdir k8s
 	touch k8s/.gitkeep
 
+k8s/config.yml:
+	.venv/bin/j2 templates/config.j2 --filters=filters.py -o k8s/config.yml
+
 k8s/sa.yml: .venv
 	.venv/bin/j2 templates/sa.j2 --filters=filters.py -o k8s/sa.yml
-
-k8s/configmap.yml: .venv
-	.venv/bin/j2 templates/configmap.j2 --filters=filters.py -o k8s/configmap.yml
 
 k8s/deployment.yml: .venv
 	.venv/bin/j2 templates/deployment.j2 --filters=filters.py -o k8s/deployment.yml
@@ -24,11 +24,11 @@ k8s/ingress.yml: .venv
 k8s/service.yml: .venv
 	.venv/bin/j2 templates/service.j2 --filters=filters.py -o k8s/service.yml
 
-render: clean k8s/configmap.yml k8s/deployment.yml k8s/ingress.yml k8s/service.yml k8s/sa.yml
+render: clean k8s/deployment.yml k8s/ingress.yml k8s/service.yml k8s/sa.yml k8s/config.yml
 
 deploy: render
+	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/config.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/sa.yml
-	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/configmap.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/deployment.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/service.yml
 	kubectl -n $(HEADSCALE_NAMESPACE) apply -f k8s/ingress.yml
