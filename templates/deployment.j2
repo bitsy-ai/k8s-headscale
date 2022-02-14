@@ -5,7 +5,7 @@ metadata:
   name: headscale
   namespace: "{{ HEADSCALE_NAMESPACE }}"
 spec:
-  replicas: 2
+  replicas: 1
   selector:
     matchLabels:
       app: headscale
@@ -45,8 +45,8 @@ spec:
             - name: DB_PASS
               valueFrom:
                 secretKeyRef:
-                  name: postgresql
-                  key: password
+                  name: headscale
+                  key: postgres-password
             - name: DB_NAME
               value: "{{ HEADSCALE_POSTGRES_DB }}"
           ports:
